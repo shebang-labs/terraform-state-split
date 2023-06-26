@@ -1,7 +1,7 @@
 FROM ruby
 ENV WORKDIR /terraform
 ENV LIBDIR /terraform-state-split
-ENV TF_VERSION 1.5.0
+ARG TF_VERSION=1.5.0
 
 ################################
 # Install Terraform
