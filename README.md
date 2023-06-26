@@ -34,7 +34,7 @@ The script will then use the `terraform state mv` command to move the selected r
 To run the script with Docker, you can use the following command:
 
 ```bash
-terraform state pull > tn.state # pull the state file from your Terraform workspace/remote state storage
+terraform state pull > in.state # pull the state file from your Terraform workspace/remote state storage
 # Change TF_VERSION to the version of Terraform you are using in the Dockerfile
 docker build . -t terraform-state-split # build the Docker image
 # ~/my-terraform-project is the path to your Terraform project directory, it should contain an initialised Terraform project (with plugins/providers downloaded)
