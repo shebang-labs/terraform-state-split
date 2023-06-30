@@ -1,4 +1,5 @@
 FROM ruby
+
 ENV WORKDIR /terraform
 ENV LIBDIR /terraform-state-split
 ARG TF_VERSION=1.5.0
@@ -13,6 +14,7 @@ RUN unzip terraform_${TF_VERSION}_linux_amd64.zip
 
 # Move to local bin
 RUN mv terraform /usr/local/bin/
+
 # Check that it's installed
 RUN terraform --version && rm terraform_${TF_VERSION}_linux_amd64.zip
 
