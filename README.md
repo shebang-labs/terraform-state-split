@@ -1,43 +1,46 @@
-# Terraform Resource Mover
+# Terraform State Split
 
-This is a Ruby script that allows you to move resources in Terraform state files based on user input. It uses the tty-prompt gem to create an interactive command-line interface, this ruby CLI tool helps you organise large terraform state files into smaller ones by moving chosen resources from a provided state file into another destination state file.
+Terraform State Split is a Ruby-based CLI tool designed to help you organize and manage large Terraform state files. It leverages the tty-prompt gem to provide an interactive command-line interface for moving selected resources between Terraform state files.
 
-## Installation
+## Getting Started
 
-To use this script, you need to have Ruby installed on your system. You also need to install the tty-prompt gem and other dependencies by running:
+### From Source
+
+For utilizing this tool, ensure Ruby is installed on your machine. Also, tty-prompt gem along with other required dependencies must be installed using the following command:
 
 ```bash
 bundle install
 ```
 
-You also need to have [Terraform installed](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and [initialized](https://developer.hashicorp.com/terraform/cli/commands/init) in your working directory.
+Terraform must also be [installed](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) and [initialized](https://developer.hashicorp.com/terraform/cli/commands/init) within your working directory.
 
-## Usage
-
-### Natively (without Docker)
-
-To run the script, simply execute it with Ruby:
+To execute `terraform-state-split`, use the following commands:
 
 ```bash
-terraform state pull > tf.state # pull the state file from your Terraform workspace/remote state storage
-ruby resource_mover.rb # run the script and follow the prompts to choose the resources you want to move
+terraform state pull > tf.state # Extract the state file from your Terraform workspace or remote state storage
+ruby resource_mover.rb # Run the script and follow the prompts to select the resources to be moved
 ```
 
-The script will ask you for the absolute input state file path and the absolute output state file path. These are the paths to the state files where you want to move resources from and to.
+### Homebrew (For MacOS)
 
-Then, the script will list all the resources in the input state file and prompt you to select the ones you want to move. You can use the arrow keys, space bar, and enter key to make your selection.
-
-The script will then use the `terraform state mv` command to move the selected resources from the input state file to the output state file.
-
-### With Docker (recommended)
-
-To run the script with Docker, you can use the following command:
+For MacOS users, the tool can be installed via Homebrew using the following commands:
 
 ```bash
- # pull the state file from your Terraform workspace/remote state storage
-terraform state pull > in.state
-# Change TF_VERSION to the version of Terraform you are using
-docker build --build-arg TF_VERSION=1.5.0 . -t terraform-state-split
-# ~/my-terraform-project is the path to your Terraform project directory, it should contain an initialised Terraform project (with plugins/providers downloaded)
-docker run -it --rm --env TF_IN_STATE_PATH=./in.state --env TF_OUT_STATE_PATH=./out.state -v ~/my-terraform-project:/terraform terraform-state-split
+brew tap shebang-labs/tap
+brew install terraform-state-split
 ```
+
+To run `terraform-state-split`, execute the following:
+
+```bash
+terraform state pull > tf.state # Extract the state file from your Terraform workspace or remote state storage
+terraform-state-split # Run the script and follow the prompts to select the resources to be moved
+```
+
+## How to Use
+
+The tool will prompt you to provide the absolute input state file path and the absolute output state file path. These are the paths of the state files from which and to which you wish to move resources.
+
+Next, all resources present in the input state file will be displayed and you'll be prompted to select the ones to be moved. Make your selection using arrow keys, space bar, and enter key.
+
+The tool will then utilize the `terraform state mv` command to transfer the selected resources from the input state file to the output state file.
