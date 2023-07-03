@@ -22,10 +22,12 @@ jobs:
         working-directory: ${{ github.workspace }}
         
       - name: Clone another repository
+        env:
+          access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git clone https://github.com/shebang-labs/homebrew-tap.git
+          git config --global user.name "Shebang Labs"
+          git config --global user.email "hello@shebanglabs.io"
+          git clone https://shebang-labs:<access_token>@github.com/shebang-labs/terraform-state-split.git
         working-directory: ${{ github.workspace }}
         
       - name: Replace brew-formula-template.rb in another repository
@@ -38,8 +40,8 @@ jobs:
           access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
         run: |
           cd homebrew-tap
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          git config user.name "Shebang Labs"
+          git config user.email "hello@shebanglabs.io"
           git add terraform-state-split.rb
           git commit -m "Update terraform-state-split.rb with new version"
           git push origin main
