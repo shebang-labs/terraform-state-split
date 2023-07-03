@@ -35,7 +35,7 @@ jobs:
         
       - name: Commit and Push changes
         env:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+          access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
         run: |
           cd homebrew-tap
           git config user.name "GitHub Actions"
