@@ -77,7 +77,7 @@ jobs:
       - name: Copy and Replace Version Name
         run: |
           sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
-          sed -i 's/sha256_replace/${{ steps.sha256_calc.outputs.hash }}/g' new_repo/terraform-state-split.rb
+          sed -i 's/sha256_replace/"${{ steps.sha256_calc.outputs.hash }}"/g' new_repo/terraform-state-split.rb
         working-directory: ${{ github.workspace }}
         
       - name: Clone another repository
