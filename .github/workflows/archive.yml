@@ -47,7 +47,15 @@ jobs:
           asset_path: temp/terraform-state-split.tar.gz
           asset_name: terraform-state-split.tar.gz
           asset_content_type: application/gzip
-        
+      
+      - name: Add Archive to Repository
+        run: |
+          cp temp/terraform-state-split.tar.gz terraform-state-split.tar.gz
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add terraform-state-split.tar.gz
+          git commit -m "Add archive to repository"
+          git push
 
       - name: Clean up
         run: rm -rf temp terraform-state-split.tar.gz
