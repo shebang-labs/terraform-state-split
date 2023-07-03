@@ -60,7 +60,7 @@ jobs:
           cp brew-formula-template.rb new_repo/terraform-state-split.rb
           ACTUAL_SHA=$(shasum -a 256 terraform-state-split.tar.gz | awk '{print $1}')
           sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
-          sed -i 's/sha256_replace/$ACTUAL_SHA/g' new_repo/terraform-state-split.rb
+          sed -i 's/sha256_replace/${ACTUAL_SHA}/g' new_repo/terraform-state-split.rb
         working-directory: ${{ github.workspace }}
         
       - name: Clone another repository
