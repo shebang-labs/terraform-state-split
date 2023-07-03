@@ -15,6 +15,14 @@ jobs:
         with:
           ref: main
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pyopenssl
+
       - name: Create and Switch to New Branch
         run: |
           git switch main
@@ -61,7 +69,7 @@ jobs:
           cp brew-formula-template.rb new_repo/terraform-state-split.rb
           TAR_FILE="terraform-state-split.tar.gz"
           
-          SHA256_HASH=$(sha256sum "$TAR_FILE" | awk '{print $2}')
+          SHA256_HASH=$(openssl dgst -sha256 "$TAR_FILE" | awk '{print $2}')
           echo "SHA256 Hash: $SHA256_HASH"
           echo "::set-output name=hash::$SHA256_HASH"
         working-directory: ${{ github.workspace }}
