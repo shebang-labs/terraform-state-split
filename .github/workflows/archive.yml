@@ -58,9 +58,12 @@ jobs:
           mkdir new_repo
           wget "https://github.com/shebang-labs/terraform-state-split/releases/download/${{ github.event.release.tag_name }}/terraform-state-split.tar.gz" -O "terraform-state-split.tar.gz"
           cp brew-formula-template.rb new_repo/terraform-state-split.rb
-          ACTUAL_SHA=$(shasum -a 256 terraform-state-split.tar.gz | awk '{print $1}')
+          TAR_FILE="terraform-state-split.tar.gz"
+          SHA256_HASH=$(openssl dgst -sha256 "$TAR_FILE" | awk '{print $2}')
+          echo "SHA256 Hash: $SHA256_HASH"
+          echo "::set-output name=hash::$SHA256_HASH"
           sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
-          sed -i 's/sha256_replace/${ACTUAL_SHA}/g' new_repo/terraform-state-split.rb
+          sed -i 's/sha256_replace/${{ steps.calculate_sha256_and_replace.outputs.hash }}/g' new_repo/terraform-state-split.rb
         working-directory: ${{ github.workspace }}
         
       - name: Clone another repository
