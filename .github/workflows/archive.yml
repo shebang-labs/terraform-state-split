@@ -52,6 +52,41 @@ jobs:
           asset_name: terraform-state-split.tar.gz
           asset_content_type: application/gzip
 
+          
+      - name: Copy and Replace Version Name
+        run: |
+          mkdir new_repo
+          wget "https://github.com/shebang-labs/terraform-state-split/releases/download/${{ github.event.release.tag_name }}/terraform-state-split.tar.gz" -O "terraform-state-split.tar.gz"
+          cp brew-formula-template.rb new_repo/terraform-state-split.rb
+          ACTUAL_SHA=$(shasum -a 256 terraform-state-split.tar.gz | awk '{print $1}')
+          sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
+          sed -i 's/sha256_replace/$ACTUAL_SHA/g' new_repo/terraform-state-split.rb
+        working-directory: ${{ github.workspace }}
+        
+      - name: Clone another repository
+        env:
+          access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
+        run: |
+          git config --global user.name "Shebang Labs"
+          git config --global user.email "hello@shebanglabs.io"
+          git clone https://shebang-labs:${{ secrets.HOMEBREW_TAP_GH_PAT }}@github.com/shebang-labs/homebrew-tap.git
+        working-directory: ${{ github.workspace }}
+        
+      - name: Replace brew-formula-template.rb in another repository
+        run: |
+          cp new_repo/terraform-state-split.rb homebrew-tap/terraform-state-split.rb
+        working-directory: ${{ github.workspace }}
+        
+      - name: Commit and Push changes
+        env:
+          access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
+        run: |
+          cd homebrew-tap
+          git add terraform-state-split.rb
+          git commit -m "Update terraform-state-split.rb with new version"
+          git push origin main
+        working-directory: ${{ github.workspace }}
+
       - name: Clean up
         run: |
           git checkout main
