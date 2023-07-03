@@ -41,7 +41,7 @@ jobs:
       - name: Attach Archive to Release
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: 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
+          GITHUB_TOKEN: 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
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: temp/terraform-state-split.tar.gz
