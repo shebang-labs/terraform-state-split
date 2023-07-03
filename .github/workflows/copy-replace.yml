@@ -40,5 +40,5 @@ jobs:
           git config user.email "actions@github.com"
           git add terraform-state-split.rb
           git commit -m "Update terraform-state-split.rb with new version"
-          git push
+          git push origin main
         working-directory: ${{ github.workspace }}
