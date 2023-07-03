@@ -2,6 +2,10 @@
 
 Terraform State Split is a Ruby-based CLI tool designed to help you organize and manage large Terraform state files. It leverages the tty-prompt gem to provide an interactive command-line interface for moving selected resources between Terraform state files.
 
+## Demo
+
+[![asciicast](https://asciinema.org/a/qqF2E5Uz2ybwzhJdMpuufzblu.svg)](https://asciinema.org/a/qqF2E5Uz2ybwzhJdMpuufzblu)
+
 ## Getting Started
 
 ### From Source
