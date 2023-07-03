@@ -52,11 +52,6 @@ jobs:
           asset_name: terraform-state-split.tar.gz
           asset_content_type: application/gzip
 
-      - name: Configure Git
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
       - name: Clean up
         run: |
           git checkout main
