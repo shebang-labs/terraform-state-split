@@ -84,8 +84,8 @@ jobs:
         
       - name: Copy and Replace Version Name
         run: |
-          sed -i 's/^\(\s*url\s*\)[^[:space:]]*/\1"https://github.com/shebang-labs/terraform-state-split/releases/download/${{ github.event.release.tag_name }}/terraform-state-split.tar.gz"/' homebrew-tap/terraform-state-split.rb
-          sed -i 's/^\(\s*sha256\s*\)[^[:space:]]*/\1"${{ steps.sha256_calc.outputs.hash }}"/' terraform-state-split.rb
+          sed -i 's/^\(\s*url\s*\)[^[:space:]]*/\1"https:\/\/github.com\/shebang-labs\/terraform-state-split\/releases\/download\/${{ github.event.release.tag_name }}\/terraform-state-split.tar.gz"/' homebrew-tap/terraform-state-split.rb
+          sed -i 's/^\(\s*sha256\s*\)[^[:space:]]*/\1"${{ steps.sha256_calc.outputs.hash }}"/' homebrew-tap/terraform-state-split.rb
        
         working-directory: ${{ github.workspace }}
       
