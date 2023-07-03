@@ -67,5 +67,4 @@ jobs:
       - name: Clean up
         run: |
           git checkout main
-          git branch -D main
           rm -rf temp terraform-state-split.tar.gz
