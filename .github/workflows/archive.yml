@@ -17,7 +17,7 @@ jobs:
 
       - name: Create and Switch to New Branch
         run: |
-          git checkout -b update-branch
+          git checkout -b main
 
       - name: Prepend Line to File
         run: |
