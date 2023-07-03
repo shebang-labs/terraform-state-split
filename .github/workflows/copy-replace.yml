@@ -30,12 +30,12 @@ jobs:
         
       - name: Replace brew-formula-template.rb in another repository
         run: |
-          cp new_repo/terraform-state-split.rb another-repo/terraform-state-split.rb
+          cp new_repo/terraform-state-split.rb homebrew-tap/terraform-state-split.rb
         working-directory: ${{ github.workspace }}
         
       - name: Commit and Push changes
         run: |
-          cd another-repo
+          cd homebrew-tap
           git add terraform-state-split.rb
           git commit -m "Update terraform-state-split.rb with new version"
           git push
