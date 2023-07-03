@@ -1,9 +1,10 @@
 name: Copy and Replace
 
 on:
-  release:
-    types:
-      - created
+    workflow_run:
+      workflows: ["Archive and Attach to Release for Brew Formula"]
+      types:
+        - completed
 
 jobs:
   copy_and_replace:
