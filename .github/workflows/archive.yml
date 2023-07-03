@@ -57,13 +57,6 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Add Archive to Repository
-        run: |
-          cp temp/terraform-state-split.tar.gz terraform-state-split.tar.gz
-          git add terraform-state-split.tar.gz
-          git commit -m "Add archive to repository"
-          git push origin main
-
       - name: Clean up
         run: |
           git checkout main
