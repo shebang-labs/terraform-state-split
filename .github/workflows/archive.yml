@@ -17,7 +17,7 @@ jobs:
 
       - name: Create and Switch to New Branch
         run: |
-          git checkout -b homebrew
+          git switch main
 
       - name: Prepend Line to File
         run: |
@@ -62,10 +62,10 @@ jobs:
           cp temp/terraform-state-split.tar.gz terraform-state-split.tar.gz
           git add terraform-state-split.tar.gz
           git commit -m "Add archive to repository"
-          git push origin update-branch
+          git push origin main
 
       - name: Clean up
         run: |
           git checkout main
-          git branch -D update-branch
+          git branch -D main
           rm -rf temp terraform-state-split.tar.gz
