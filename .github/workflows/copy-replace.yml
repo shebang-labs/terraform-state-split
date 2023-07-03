@@ -34,6 +34,8 @@ jobs:
         working-directory: ${{ github.workspace }}
         
       - name: Commit and Push changes
+        env:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd homebrew-tap
           git config user.name "GitHub Actions"
