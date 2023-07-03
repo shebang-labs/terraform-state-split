@@ -66,20 +66,13 @@ jobs:
         run: |
           mkdir new_repo
           wget "https://github.com/shebang-labs/terraform-state-split/releases/download/${{ github.event.release.tag_name }}/terraform-state-split.tar.gz" -O "terraform-state-split.tar.gz"
-          cp brew-formula-template.rb new_repo/terraform-state-split.rb
           TAR_FILE="terraform-state-split.tar.gz"
           
           SHA256_HASH=$(openssl dgst -sha256 "$TAR_FILE" | awk '{print $2}')
           echo "SHA256 Hash: $SHA256_HASH"
           echo "::set-output name=hash::$SHA256_HASH"
         working-directory: ${{ github.workspace }}
-
-      - name: Copy and Replace Version Name
-        run: |
-          sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
-          sed -i 's/sha256_replace/"${{ steps.sha256_calc.outputs.hash }}"/g' new_repo/terraform-state-split.rb
-        working-directory: ${{ github.workspace }}
-        
+  
       - name: Clone another repository
         env:
           access_token: ${{ secrets.HOMEBREW_TAP_GH_PAT }}
@@ -89,10 +82,13 @@ jobs:
           git clone https://shebang-labs:${{ secrets.HOMEBREW_TAP_GH_PAT }}@github.com/shebang-labs/homebrew-tap.git
         working-directory: ${{ github.workspace }}
         
-      - name: Replace brew-formula-template.rb in another repository
+      - name: Copy and Replace Version Name
         run: |
-          cp new_repo/terraform-state-split.rb homebrew-tap/terraform-state-split.rb
+          sed -i 's/^\(\s*url\s*\)[^[:space:]]*/\1"https://github.com/shebang-labs/terraform-state-split/releases/download/${{ github.event.release.tag_name }}/terraform-state-split.tar.gz"/' homebrew-tap/terraform-state-split.rb
+          sed -i 's/^\(\s*sha256\s*\)[^[:space:]]*/\1"${{ steps.sha256_calc.outputs.hash }}"/' terraform-state-split.rb
+       
         working-directory: ${{ github.workspace }}
+      
         
       - name: Commit and Push changes
         env:
