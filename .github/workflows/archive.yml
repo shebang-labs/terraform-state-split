@@ -63,7 +63,7 @@ jobs:
           echo "SHA256 Hash: $SHA256_HASH"
           echo "::set-output name=hash::$SHA256_HASH"
           sed -i 's/version_name/${{ github.event.release.tag_name }}/g' new_repo/terraform-state-split.rb
-          sed -i 's/sha256_replace/${{ steps.calculate_sha256_and_replace.outputs.hash }}/g' new_repo/terraform-state-split.rb
+          sed -i 's/sha256_replace/${{ steps.archiveAndAttach.outputs.hash }}/g' new_repo/terraform-state-split.rb
         working-directory: ${{ github.workspace }}
         
       - name: Clone another repository
