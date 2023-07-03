@@ -13,7 +13,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
         with:
-          access-token: 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
+          ref: main  # Replace with the branch name you want to base the new branch on
+
+      - name: Create and Switch to New Branch
+        run: |
+          git checkout -b update-branch
 
       - name: Prepend Line to File
         run: |
@@ -47,15 +51,21 @@ jobs:
           asset_path: temp/terraform-state-split.tar.gz
           asset_name: terraform-state-split.tar.gz
           asset_content_type: application/gzip
-      
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
       - name: Add Archive to Repository
         run: |
           cp temp/terraform-state-split.tar.gz terraform-state-split.tar.gz
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
           git add terraform-state-split.tar.gz
           git commit -m "Add archive to repository"
-          git push
+          git push origin update-branch
 
       - name: Clean up
-        run: rm -rf temp terraform-state-split.tar.gz
+        run: |
+          git checkout main
+          git branch -D update-branch
+          rm -rf temp terraform-state-split.tar.gz
