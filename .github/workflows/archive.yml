@@ -27,10 +27,6 @@ jobs:
         run: |
           git switch main
 
-      - name: Prepend Line to File
-        run: |
-          echo -e "#!/usr/bin/env ruby\n$(cat resource_mover.rb)" > terraform-state-split
-
       - name: Create Archive
         run: tar -czvf terraform-state-split.tar.gz terraform-state-split
 
