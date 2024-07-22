@@ -3,8 +3,14 @@ GEM
   specs:
     pastel (0.8.0)
       tty-color (~> 0.5)
+    strings-ansi (0.2.0)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
+    tty-progressbar (0.18.2)
+      strings-ansi (~> 0.2)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      unicode-display_width (>= 1.6, < 3.0)
     tty-prompt (0.23.1)
       pastel (~> 0.8)
       tty-reader (~> 0.8)
@@ -13,12 +19,15 @@ GEM
       tty-screen (~> 0.8)
       wisper (~> 2.0)
     tty-screen (0.8.1)
+    unicode-display_width (2.5.0)
     wisper (2.0.1)
 
 PLATFORMS
   arm64-darwin-22
+  x86_64-darwin-23
 
 DEPENDENCIES
+  tty-progressbar
   tty-prompt
 
 BUNDLED WITH
